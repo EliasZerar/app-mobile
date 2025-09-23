@@ -20,13 +20,6 @@ export default function TabLayout() {
                     tabBarIcon: ({ color }) => <IconSymbol size={28} name="football.fill" color={color} />,
                 }}
             />
-            <Tabs.Screen
-                name="login"
-                options={{
-                    title: 'Login',
-                    tabBarIcon: ({ color }) => <IconSymbol size={28} name="rectangle.portrait.and.arrow.right" color={color} />,
-                }}
-            />
         </Tabs>
     );
 }

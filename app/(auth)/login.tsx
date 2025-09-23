@@ -1,7 +1,11 @@
 import Form from "@/app/components/form";
 import {View} from "react-native";
+import {useState} from "react";
 
 export default function Index() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     return (
         <View
             style={{
@@ -10,7 +14,12 @@ export default function Index() {
                 alignItems: "center",
             }}
         >
-        <Form/>
+            <Form
+                email={email}
+                setEmail={setEmail}
+                password={password}
+                setPassword={setPassword}
+            />
         </View>
     );
 }

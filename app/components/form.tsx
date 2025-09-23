@@ -1,11 +1,18 @@
 import {useState} from "react";
 import {StyleSheet, TextInput, Text, Button, Pressable, View} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
-import {Link} from "expo-router";
+import {Link, Redirect} from "expo-router";
+import {usePathname} from "expo-router";
 
-const Form = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+interface FormProps {
+    email: string;
+    setEmail: (email: string) => void;
+    password: string;
+    setPassword: (password: string) => void;
+}
+
+const Form:  React.FC<FormProps>= ({ email, setEmail, password, setPassword }) => {
+    const route = usePathname()
 
     return (
         <SafeAreaProvider>
@@ -19,18 +26,48 @@ const Form = () => {
                 />
                 </View>
                 <View>
-                <Text>Mot de passe</Text>
+                    <Text>Mot de passe</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={setPassword}
                     value={password}
                 />
                     </View>
-                <Link href="/" asChild >
-                    <Pressable>
-                        <Text style={styles.button}>Connexion</Text>
-                    </Pressable>
-                </Link>
+
+                {route == "/login" ?
+                    <>
+                        <Link href="/" asChild >
+                            <Pressable>
+                                <Text style={styles.button}>Connexion</Text>
+                            </Pressable>
+                        </Link>
+                    <Text>
+                        Pas encore de compte ?
+                    </Text>
+                    <Link href="/register" asChild >
+                        <Pressable>
+                            <Text  style={styles.button}>Inscrivez-vous</Text>
+                        </Pressable>
+                    </Link>
+                    </>
+                    :
+                    <>
+                        <Link href="/" asChild >
+                            <Pressable>
+                                <Text style={styles.button}>Inscription</Text>
+                            </Pressable>
+                        </Link>
+                        <Text>
+                            Déjà un compte ?
+                        </Text>
+                        <Link href="/login" asChild >
+                            <Pressable>
+                                <Text  style={styles.button}>Connectez-vous</Text>
+                            </Pressable>
+                        </Link>
+                    </>
+                }
+
             </SafeAreaView>
         </SafeAreaProvider>
     );
