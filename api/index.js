@@ -19,6 +19,10 @@ app.get("/", (req, res) => {
 
 app.use("/user", require("./src/controllers/user"));
 
+app.use("/match", require("./src/controllers/match"));
+
+app.use("/favorite", require("./src/controllers/favorite"));
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
