@@ -13,13 +13,15 @@ export default function TabLayout() {
                     tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
                 }}
             />
+
             <Tabs.Screen
-                name="match"
+                name="favorites"
                 options={{
-                    title: 'Match',
-                    tabBarIcon: ({ color }) => <IconSymbol size={28} name="football.fill" color={color} />,
+                    title: 'Favorites',
+                    tabBarIcon: ({ color }) => <IconSymbol size={28} name="star.fill" color={color} />,
                 }}
             />
+
         </Tabs>
     );
 }

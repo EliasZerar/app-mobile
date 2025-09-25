@@ -21,6 +21,8 @@ app.use("/user", require("./src/controllers/user"));
 
 app.use("/match", require("./src/controllers/match"));
 
+app.use ("/auth", require("./src/controllers/auth"));
+
 app.use("/favorite", require("./src/controllers/favorite"));
 
 app.listen(port, () => {
