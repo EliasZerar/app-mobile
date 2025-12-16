@@ -13,7 +13,6 @@ export default function RegisterScreen() {
 
     const router = useRouter();
 
-    // Récupération des actions du store pour connecter l'utilisateur directement après l'inscription
     const setToken = useAuthStore((state) => state.setToken);
     const setUser = useAuthStore((state) => state.setUser);
     const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
@@ -27,28 +26,29 @@ export default function RegisterScreen() {
         setLoading(true);
 
         try {
-            // Adaptez le endpoint si nécessaire (ex: "/auth/signup")
             const response = await api.post("/auth/register", {
                 email,
                 password
             });
 
-            if (response.ok) {
-                // Si votre API renvoie le token et l'user directement après l'inscription :
-                if (response.token) {
-                    setToken(response.token || response.data?.token);
+            if (response.status === 201) {
+
+                console.log('response:', response)
+
+                const token = response.token || response.data?.token;
+
+                if (token) {
+                    setToken(token);
                     setUser(response.user || response.data?.user);
                     setIsLoggedIn(true);
                     router.replace("/");
                 } else {
-                    // Si l'API ne renvoie pas de token (ex: demande de confirmation email),
-                    // redirigez vers le login avec un message
                     Alert.alert("Succès", "Compte créé ! Veuillez vous connecter.");
                     router.replace("/login");
                 }
             } else {
-                // Gestion des erreurs (ex: Email déjà utilisé)
-                Alert.alert("Erreur d'inscription", response.error || "Impossible de créer le compte");
+                const errorMessage = response.data?.message || response.error || "Impossible de créer le compte";
+                Alert.alert("Erreur d'inscription", errorMessage);
             }
         } catch (error) {
             console.error(error);
@@ -71,7 +71,7 @@ export default function RegisterScreen() {
                 setEmail={setEmail}
                 password={password}
                 setPassword={setPassword}
-                onSubmit={handleRegister} // L'action déclenche l'inscription
+                onSubmit={handleRegister}
                 loading={loading}
             />
         </View>
