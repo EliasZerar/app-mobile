@@ -15,6 +15,8 @@ class APIHandler {
         }
     }
 
+    // Dans api.js
+
     getHeaders() {
         const currentToken = useAuthStore.getState().token;
 
@@ -26,6 +28,7 @@ class APIHandler {
             "x-app-platform": Platform.OS,
             "x-app-build-number": Application.nativeBuildVersion,
             "x-timezone": getCalendars()[0].timeZone,
+            "ngrok-skip-browser-warning": "true",
         };
     }
 

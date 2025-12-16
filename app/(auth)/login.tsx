@@ -29,16 +29,17 @@ export default function LoginScreen() {
         try {
             console.log('1')
             const response = await api.post("/auth/login", { email, password });
-            console.log('2')
-            if (response.ok) {
+            console.log('2:', response)
+            if (response.status === 200) {
                 setToken(response.token || response.data?.token);
                 setUser(response.user || response.data?.user);
                 setIsLoggedIn(true);
 
 
                 router.replace("/");
+                console.log('3', response)
             } else {
-                Alert.alert("Échec de connexion", response.error || "Email ou mot de passe incorrect");
+                console.log('4', response)
             }
         } catch (error) {
             console.error(error);
