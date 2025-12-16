@@ -17,6 +17,8 @@ const MAPPING = {
     'house.fill': 'home',
     'star.fill': 'star',
     'person.fill': 'person',
+    'moon.fill': 'dark-mode',
+    'sun.max.fill': 'light-mode',
     'rectangle.portrait.and.arrow.right': 'login',
     'chevron.left.forwardslash.chevron.right': 'code',
     'chevron.right': 'chevron-right',

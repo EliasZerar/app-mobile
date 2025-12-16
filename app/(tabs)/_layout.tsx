@@ -1,34 +1,75 @@
 import { IconSymbol } from '@/app/components/ui/icon';
+import { ThemeProvider, useTheme } from '@/app/utils/theme';
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { Pressable, StatusBar } from 'react-native';
 
-export default function TabLayout() {
+function ThemeToggleButton() {
+    const { theme, toggleTheme, colors } = useTheme();
 
     return (
-        <Tabs>
-            <Tabs.Screen
-                name="index"
-                options={{
-                    title: 'Accueil',
-                    tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-                }}
+        <Pressable onPress={toggleTheme} style={{ marginRight: 15 }}>
+            <IconSymbol
+                size={24}
+                name={theme === 'light' ? 'moon.fill' : 'sun.max.fill'}
+                color={colors.text}
             />
+        </Pressable>
+    );
+}
 
-            <Tabs.Screen
-                name="favorites"
-                options={{
-                    title: 'Favorites',
-                    tabBarIcon: ({ color }) => <IconSymbol size={28} name="star.fill" color={color} />,
-                }}
-            />
+export default function TabLayout() {
+    return (
+        <ThemeProvider>
+            <TabsWithTheme />
+        </ThemeProvider>
+    );
+}
 
-            <Tabs.Screen
-                name="profile"
-                options={{
-                    title: 'Profil',
-                    tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
-                }}
+function TabsWithTheme() {
+    const { colors, theme } = useTheme();
+
+    return (
+        <>
+            <StatusBar
+                animated={true}
+                backgroundColor={colors.background}
+                key={theme}
+                barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
             />
-        </Tabs>
+            <Tabs
+                screenOptions={{
+                    headerStyle: { backgroundColor: colors.background },
+                    headerTintColor: colors.text,
+                    tabBarStyle: {
+                        backgroundColor: colors.background,
+                        borderTopColor: colors.border
+                    },
+                    headerRight: () => <ThemeToggleButton />,
+                }}>
+                <Tabs.Screen
+                    name="index"
+                    options={{
+                        title: 'Accueil',
+                        tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+                    }}
+                />
+                <Tabs.Screen
+                    name="favorites"
+                    options={{
+                        title: 'Favorites',
+                        tabBarIcon: ({ color }) => <IconSymbol size={28} name="star.fill" color={color} />,
+                    }}
+                />
+
+                <Tabs.Screen
+                    name="profile"
+                    options={{
+                        title: 'Profil',
+                        tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+                    }}
+                />
+            </Tabs>
+        </>
     );
 }
