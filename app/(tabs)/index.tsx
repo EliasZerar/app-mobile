@@ -10,6 +10,8 @@ import {
     View,
 } from "react-native";
 
+import api from "../services/api";
+
 type Team = {
     id: number;
     name: string;
@@ -39,8 +41,12 @@ export default function Match() {
 
     const getMatches = async () => {
         try {
-            const response = require("../../matches.json");
-            setData(response.matches);
+            const response = await api.get("/match");
+            if (response.status === 200) {
+                setData(response.matches);
+            } else {
+                console.error(response.error);
+            }
         } catch (error) {
             console.error(error);
         } finally {

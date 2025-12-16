@@ -15,8 +15,6 @@ class APIHandler {
         }
     }
 
-    // Dans api.js
-
     getHeaders() {
         const currentToken = useAuthStore.getState().token;
 

@@ -15,4 +15,13 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get("/:id", async (req, res) => {
+    try {
+        const user = await UserObject.findById(req.params.id);
+        return res.status(200).send({ ok: true, user });
+    } catch (error) {
+        return res.status(500).send({ ok: false, code: SERVER_ERROR, error });
+    }
+});
+
 module.exports = router;
