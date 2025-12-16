@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
     ActivityIndicator,
     FlatList,
-    Image,
     Modal,
     Pressable,
     StyleSheet,
@@ -10,30 +9,13 @@ import {
     View,
 } from "react-native";
 
+import MatchCard from "@/app/components/MatchCard";
+import { Match } from "@/app/constants/type";
+import { useTheme } from "@/app/utils/theme";
 import api from "../services/api";
 
-type Team = {
-    id: number;
-    name: string;
-    crest: string;
-    tla: string;
-};
-
-type Competition = {
-    id: number;
-    name: string;
-    emblem: string;
-};
-
-type Match = {
-    id: number;
-    utcDate: string;
-    homeTeam: Team;
-    awayTeam: Team;
-    competition: Competition;
-};
-
-export default function Match() {
+export default function MatchScreen() {
+    const { colors } = useTheme();
     const [data, setData] = useState<Match[]>([]);
     const [isLoading, setLoading] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
@@ -58,37 +40,23 @@ export default function Match() {
         getMatches();
     }, []);
 
-    const renderItem = ({ item }: { item: Match }) => (
-        <Pressable
-            style={styles.row}
-            onPress={() => {
-                setSelectedMatch(item);
-                setModalVisible(true);
-            }}
-        >
-            <View style={styles.team}>
-                <Text style={styles.col}>{item.homeTeam.tla}</Text>
-                <Image source={{ uri: item.homeTeam.crest }} style={styles.icon} />
-            </View>
-
-            <Text style={styles.col}>vs</Text>
-
-            <View style={styles.team}>
-                <Image source={{ uri: item.awayTeam.crest }} style={styles.icon} />
-                <Text style={styles.col}>{item.awayTeam.tla}</Text>
-            </View>
-        </Pressable>
-    );
-
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
             {isLoading ? (
-                <ActivityIndicator />
+                <ActivityIndicator color={colors.text} size="large" style={{ marginTop: 20 }} />
             ) : (
                 <FlatList
                     data={data}
                     keyExtractor={({ id }) => id.toString()}
-                    renderItem={renderItem}
+                    renderItem={({ item }) => (
+                        <MatchCard
+                            item={item}
+                            onPress={() => {
+                                setSelectedMatch(item);
+                                setModalVisible(true);
+                            }}
+                        />
+                    )}
                 />
             )}
 
@@ -100,11 +68,13 @@ export default function Match() {
                     onRequestClose={() => setModalVisible(false)}
                 >
                     <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.modalText}>
+                        <View style={[styles.modalView, { backgroundColor: colors.card }]}>
+                            <Text style={[styles.modalText, { color: colors.text }]}>
                                 {selectedMatch.homeTeam.name} vs {selectedMatch.awayTeam.name}
                             </Text>
-                            <Text style={styles.modalText}>{selectedMatch.utcDate}</Text>
+                            <Text style={[styles.modalText, { color: colors.subText }]}>
+                                {new Date(selectedMatch.utcDate).toLocaleString()}
+                            </Text>
                             <Pressable
                                 style={[styles.button, styles.buttonClose]}
                                 onPress={() => setModalVisible(false)}
@@ -124,47 +94,15 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         margin: "auto",
-        backgroundColor: "#262626",
-    },
-    row: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingVertical: 8,
-        width: "100%",
-        borderBottomWidth: 1,
-        borderColor: "#ddd",
-        height: 100,
-        gap: 40,
-        borderRadius: 10,
-        boxShadow: "5 5 15 5 #ffffff",
-    },
-    col: {
-        marginHorizontal: 6,
-        flexShrink: 1,
-        color: "#fff",
-    },
-    icon: {
-        width: 50,
-        aspectRatio: 1,
-        resizeMode: "contain",
-    },
-    team: {
-        flex: 0.5,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        flexShrink: 1,
-        gap: 10,
     },
     centeredView: {
         flex: 1,
         justifyContent: "flex-end",
         alignItems: "flex-end",
         width: "100%",
+        backgroundColor: 'rgba(0,0,0,0.5)'
     },
     modalView: {
-        backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
         paddingHorizontal: 70,
@@ -175,9 +113,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-    },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
     },
     buttonClose: {
         backgroundColor: "#2196F3",
@@ -190,5 +125,7 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: "center",
+        fontWeight: 'bold',
+        fontSize: 18
     },
 });
