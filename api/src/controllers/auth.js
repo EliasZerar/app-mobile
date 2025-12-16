@@ -5,6 +5,7 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 
 router.post('/login', async (req, res) => {
+    console.log('Login request body:', req.body);
     const { email, password } = req.body;
 
     try {
@@ -29,11 +30,11 @@ router.post('/register',
         const errors = validationResult(req);
         if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-        const {email, password } = req.body;
+        const { email, password } = req.body;
 
         try {
             const hashedPassword = await bcrypt.hash(password, 10);
-            const user = new User({email, password: hashedPassword });
+            const user = new User({ email, password: hashedPassword });
             await user.save();
             res.status(201).json({ message: 'User registered successfully' });
         } catch (err) {

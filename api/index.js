@@ -21,10 +21,10 @@ app.use("/user", require("./src/controllers/user"));
 
 app.use("/match", require("./src/controllers/match"));
 
-app.use ("/auth", require("./src/controllers/auth"));
+app.use("/auth", require("./src/controllers/auth"));
 
 app.use("/favorite", require("./src/controllers/favorite"));
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`Example app listening on port ${port}`);
 });

@@ -1,6 +1,6 @@
+import { IconSymbol } from '@/app/components/ui/icon';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { IconSymbol } from '@/app/components/ui/icon';
 
 export default function TabLayout() {
 
@@ -9,7 +9,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'Home',
+                    title: 'Accueil',
                     tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
                 }}
             />
