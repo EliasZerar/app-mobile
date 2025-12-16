@@ -27,9 +27,7 @@ export default function LoginScreen() {
         setLoading(true);
 
         try {
-            console.log('1')
             const response = await api.post("/auth/login", { email, password });
-            console.log('2:', response)
             if (response.status === 200) {
                 setToken(response.token || response.data?.token);
                 setUser(response.user || response.data?.user);
@@ -37,9 +35,9 @@ export default function LoginScreen() {
 
 
                 router.replace("/");
-                console.log('3', response)
             } else {
-                console.log('4', response)
+                const errorMessage = response.data?.message || response.error || "Email ou mot de passe incorrect";
+                Alert.alert("Erreur de connexion", errorMessage);
             }
         } catch (error) {
             console.error(error);
