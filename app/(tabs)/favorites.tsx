@@ -1,6 +1,6 @@
 import { IconSymbol } from "@/app/components/ui/icon";
 import useFavorites from "@/app/hooks/usefavorite";
-import { useCallback, useEffect, useState, } from "react";
+import { useCallback, useState, } from "react";
 import {
     ActivityIndicator,
     FlatList,
@@ -16,8 +16,8 @@ import {
 import MatchCard from "@/app/components/MatchCard";
 import { Match } from "@/app/constants/type";
 import { useTheme } from "@/app/utils/theme";
+import { useFocusEffect } from "@react-navigation/native";
 import api from "../services/api";
-import {useFocusEffect} from "@react-navigation/native";
 export default function FavoriteScreen() {
     const { colors } = useTheme();
     const [favoriteMatches, setFavoriteMatches] = useState<Match[]>([]);

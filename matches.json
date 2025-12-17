@@ -1,14 +1,14 @@
 {
   "filters": {
-    "dateFrom": "23/09/2025 00:00",
-    "dateTo": "24/09/2025 00:00",
+    "dateFrom": "17/12/2025 00:00",
+    "dateTo": "31/12/2025 00:00",
     "permission": "TIER_ONE"
   },
   "resultSet": {
     "count": 40,
     "competitions": "PD,PPL,CLI",
-    "first": "23/09/2025 00:00",
-    "last": "24/09/2025 00:00",
+    "first": "17/12/2025 17:00",
+    "last": "26/12/2025 21:00",
     "played": 0
   },
   "matches": [
@@ -34,7 +34,7 @@
         "winner": null
       },
       "id": 544261,
-      "utcDate": "23/09/2025 17:00",
+      "utcDate": "17/12/2025 17:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -93,7 +93,7 @@
         "winner": null
       },
       "id": 544262,
-      "utcDate": "23/09/2025 19:00",
+      "utcDate": "17/12/2025 18:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -152,7 +152,7 @@
         "winner": null
       },
       "id": 544263,
-      "utcDate": "23/09/2025 21:00",
+      "utcDate": "17/12/2025 20:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -211,7 +211,7 @@
         "winner": null
       },
       "id": 544264,
-      "utcDate": "23/09/2025 23:00",
+      "utcDate": "17/12/2025 21:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -270,7 +270,7 @@
         "winner": null
       },
       "id": 544265,
-      "utcDate": "24/09/2025 01:00",
+      "utcDate": "18/12/2025 17:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -329,7 +329,7 @@
         "winner": null
       },
       "id": 544266,
-      "utcDate": "24/09/2025 03:00",
+      "utcDate": "18/12/2025 18:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -388,7 +388,7 @@
         "winner": null
       },
       "id": 544267,
-      "utcDate": "24/09/2025 05:00",
+      "utcDate": "18/12/2025 20:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -447,7 +447,7 @@
         "winner": null
       },
       "id": 544268,
-      "utcDate": "24/09/2025 07:00",
+      "utcDate": "18/12/2025 21:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -506,7 +506,7 @@
         "winner": null
       },
       "id": 544269,
-      "utcDate": "24/09/2025 09:00",
+      "utcDate": "19/12/2025 17:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -565,7 +565,7 @@
         "winner": null
       },
       "id": 544270,
-      "utcDate": "24/09/2025 11:00",
+      "utcDate": "19/12/2025 18:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -624,7 +624,7 @@
         "winner": null
       },
       "id": 544271,
-      "utcDate": "24/09/2025 13:00",
+      "utcDate": "19/12/2025 20:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -683,7 +683,7 @@
         "winner": null
       },
       "id": 544272,
-      "utcDate": "24/09/2025 15:00",
+      "utcDate": "19/12/2025 21:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -742,7 +742,7 @@
         "winner": null
       },
       "id": 544273,
-      "utcDate": "24/09/2025 17:00",
+      "utcDate": "20/12/2025 17:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -801,7 +801,7 @@
         "winner": null
       },
       "id": 544274,
-      "utcDate": "24/09/2025 19:00",
+      "utcDate": "20/12/2025 18:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -860,7 +860,7 @@
         "winner": null
       },
       "id": 544275,
-      "utcDate": "24/09/2025 21:00",
+      "utcDate": "20/12/2025 20:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -919,7 +919,7 @@
         "winner": null
       },
       "id": 544276,
-      "utcDate": "24/09/2025 23:00",
+      "utcDate": "20/12/2025 21:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -978,7 +978,7 @@
         "winner": null
       },
       "id": 544277,
-      "utcDate": "25/09/2025 01:00",
+      "utcDate": "21/12/2025 17:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1037,7 +1037,7 @@
         "winner": null
       },
       "id": 544278,
-      "utcDate": "25/09/2025 03:00",
+      "utcDate": "21/12/2025 18:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -1096,7 +1096,7 @@
         "winner": null
       },
       "id": 544279,
-      "utcDate": "25/09/2025 05:00",
+      "utcDate": "21/12/2025 20:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1155,7 +1155,7 @@
         "winner": null
       },
       "id": 544280,
-      "utcDate": "25/09/2025 07:00",
+      "utcDate": "21/12/2025 21:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1214,7 +1214,7 @@
         "winner": null
       },
       "id": 544281,
-      "utcDate": "25/09/2025 09:00",
+      "utcDate": "22/12/2025 17:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -1273,7 +1273,7 @@
         "winner": null
       },
       "id": 544282,
-      "utcDate": "25/09/2025 11:00",
+      "utcDate": "22/12/2025 18:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1332,7 +1332,7 @@
         "winner": null
       },
       "id": 544283,
-      "utcDate": "25/09/2025 13:00",
+      "utcDate": "22/12/2025 20:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1391,7 +1391,7 @@
         "winner": null
       },
       "id": 544284,
-      "utcDate": "25/09/2025 15:00",
+      "utcDate": "22/12/2025 21:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -1450,7 +1450,7 @@
         "winner": null
       },
       "id": 544285,
-      "utcDate": "25/09/2025 17:00",
+      "utcDate": "23/12/2025 17:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1509,7 +1509,7 @@
         "winner": null
       },
       "id": 544286,
-      "utcDate": "25/09/2025 19:00",
+      "utcDate": "23/12/2025 18:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1568,7 +1568,7 @@
         "winner": null
       },
       "id": 544287,
-      "utcDate": "25/09/2025 21:00",
+      "utcDate": "23/12/2025 20:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -1627,7 +1627,7 @@
         "winner": null
       },
       "id": 544288,
-      "utcDate": "25/09/2025 23:00",
+      "utcDate": "23/12/2025 21:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1686,7 +1686,7 @@
         "winner": null
       },
       "id": 544289,
-      "utcDate": "26/09/2025 01:00",
+      "utcDate": "24/12/2025 17:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1745,7 +1745,7 @@
         "winner": null
       },
       "id": 544290,
-      "utcDate": "26/09/2025 03:00",
+      "utcDate": "24/12/2025 18:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -1804,7 +1804,7 @@
         "winner": null
       },
       "id": 544291,
-      "utcDate": "26/09/2025 05:00",
+      "utcDate": "24/12/2025 20:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1863,7 +1863,7 @@
         "winner": null
       },
       "id": 544292,
-      "utcDate": "26/09/2025 07:00",
+      "utcDate": "24/12/2025 21:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -1922,7 +1922,7 @@
         "winner": null
       },
       "id": 544293,
-      "utcDate": "26/09/2025 09:00",
+      "utcDate": "25/12/2025 17:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -1981,7 +1981,7 @@
         "winner": null
       },
       "id": 544294,
-      "utcDate": "26/09/2025 11:00",
+      "utcDate": "25/12/2025 18:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -2040,7 +2040,7 @@
         "winner": null
       },
       "id": 544295,
-      "utcDate": "26/09/2025 13:00",
+      "utcDate": "25/12/2025 20:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -2099,7 +2099,7 @@
         "winner": null
       },
       "id": 544296,
-      "utcDate": "26/09/2025 15:00",
+      "utcDate": "25/12/2025 21:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -2158,7 +2158,7 @@
         "winner": null
       },
       "id": 544297,
-      "utcDate": "26/09/2025 17:00",
+      "utcDate": "26/12/2025 17:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -2217,7 +2217,7 @@
         "winner": null
       },
       "id": 544298,
-      "utcDate": "26/09/2025 19:00",
+      "utcDate": "26/12/2025 18:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
@@ -2276,7 +2276,7 @@
         "winner": null
       },
       "id": 544299,
-      "utcDate": "26/09/2025 21:00",
+      "utcDate": "26/12/2025 20:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "QUARTER_FINALS",
@@ -2335,7 +2335,7 @@
         "winner": null
       },
       "id": 544300,
-      "utcDate": "26/09/2025 23:00",
+      "utcDate": "26/12/2025 21:00",
       "status": "TIMED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
