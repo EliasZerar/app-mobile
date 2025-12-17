@@ -1,9 +1,10 @@
 const ENVIRONMENT = getEnvironment();
 const MONGODB_ENDPOINT = process.env.MONGODB_ENDPOINT;
-
+const SECRET = process.env.JWT_SECRET;
 module.exports = {
     MONGODB_ENDPOINT,
-    ENVIRONMENT
+    ENVIRONMENT,
+    SECRET,
 };
 
 function getEnvironment() {
