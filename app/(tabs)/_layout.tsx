@@ -1,8 +1,8 @@
 import { IconSymbol } from '@/app/components/ui/icon';
 import { ThemeProvider, useTheme } from '@/app/utils/theme';
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Pressable, StatusBar } from 'react-native';
+import React, { useEffect } from 'react';
+import { Pressable, StatusBar, StatusBarStyle } from 'react-native';
 
 function ThemeToggleButton() {
     const { theme, toggleTheme, colors } = useTheme();
@@ -28,6 +28,18 @@ export default function TabLayout() {
 
 function TabsWithTheme() {
     const { colors, theme } = useTheme();
+
+    useEffect(() => {
+        const style: StatusBarStyle = theme === 'dark' ? 'light-content' : 'dark-content';
+
+        StatusBar.setBarStyle(style);
+
+        const timer = setTimeout(() => {
+            StatusBar.setBarStyle(style);
+        }, 100);
+
+        return () => clearTimeout(timer);
+    }, [theme]);
 
     return (
         <>
