@@ -8,14 +8,13 @@ export default function FavoritesScreen() {
     const { getUserFavorites } = useFavorites();
     const [favIds, setFavIds] = useState<number[]>([]);
 
-    // Exemple simple pour afficher que ça marche
     useEffect(() => {
         const load = async () => {
             const ids = await getUserFavorites();
             if(ids) setFavIds(ids);
         };
         load();
-    }, []);
+    }, [getUserFavorites]);
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
