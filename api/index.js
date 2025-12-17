@@ -13,6 +13,8 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+require("./src/services/passport")(app);
+
 app.get("/", (req, res) => {
     res.send("Hello World");
 });

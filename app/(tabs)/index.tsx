@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 import {
     ActivityIndicator,
     FlatList,
@@ -8,6 +8,8 @@ import {
     Text,
     View,
 } from "react-native";
+import {IconSymbol} from "@/app/components/ui/icon";
+import useFavorites from "@/app/(tabs)/favorites";
 
 import MatchCard from "@/app/components/MatchCard";
 import { Match } from "@/app/constants/type";
@@ -20,6 +22,10 @@ export default function MatchScreen() {
     const [isLoading, setLoading] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
+    const [favoriteMatchIds, setFavoriteMatchIds] = useState<Set<number>>(new Set());
+
+    const { toggleFavorite, getUserFavorites, userId } = useFavorites();
+    console.log("aaa",userId)
 
     const getMatches = async () => {
         try {
@@ -40,6 +46,37 @@ export default function MatchScreen() {
         getMatches();
     }, []);
 
+    const loadUserFavorites = useCallback(async () => {
+        if (userId) {
+            const favoritesArray = await getUserFavorites();
+            setFavoriteMatchIds(new Set(favoritesArray.map(Number)));
+  }
+    }, [userId, getUserFavorites]);
+
+    useEffect(() => {
+        loadUserFavorites();
+    }, [loadUserFavorites]);
+
+    const handleToggleFavorite = async () => {
+        if (!selectedMatch) return;
+
+        const matchId = selectedMatch.id;
+        const isCurrentlyFavorite = favoriteMatchIds.has(matchId);
+
+        const success = await toggleFavorite(matchId, isCurrentlyFavorite);
+
+        if (success) {
+            setFavoriteMatchIds(prev => {
+                const newSet = new Set(prev);
+                if (isCurrentlyFavorite) {
+                    newSet.delete(matchId);
+                } else {
+                    newSet.add(matchId);
+                }
+                return newSet;
+            });
+        }
+    };
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {isLoading ? (
@@ -59,32 +96,43 @@ export default function MatchScreen() {
                     )}
                 />
             )}
+                {selectedMatch && (
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => setModalVisible(false)}
+                    >
+                        <View style={styles.centeredView}>
+                            <View style={[styles.modalView, { backgroundColor: colors.card }]}>
 
-            {selectedMatch && (
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={styles.centeredView}>
-                        <View style={[styles.modalView, { backgroundColor: colors.card }]}>
-                            <Text style={[styles.modalText, { color: colors.text }]}>
-                                {selectedMatch.homeTeam.name} vs {selectedMatch.awayTeam.name}
-                            </Text>
-                            <Text style={[styles.modalText, { color: colors.subText }]}>
-                                {new Date(selectedMatch.utcDate).toLocaleString()}
-                            </Text>
-                            <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={() => setModalVisible(false)}
-                            >
-                                <Text style={styles.textStyle}>Close</Text>
-                            </Pressable>
+                                <Pressable
+                                    onPress={handleToggleFavorite}
+                                >
+                                    <IconSymbol
+                                        style={styles.favoriteIcon}
+                                        size={28}
+                                        name={favoriteMatchIds.has(selectedMatch.id) ? "star.fill" : "star.circle"}
+                                        color={'orange'}
+                                    />
+                                </Pressable>
+                                <Text style={styles.modalText}>
+                                    {selectedMatch.homeTeam.name} vs {selectedMatch.awayTeam.name}
+                                </Text>
+                                <Text style={[styles.modalText, { color: colors.subText }]}>
+                                    {new Date(selectedMatch.utcDate).toLocaleString()}
+                                </Text>
+                                <Pressable
+                                    style={[styles.button, styles.buttonClose]}
+                                    onPress={() => setModalVisible(false)}
+                                >
+                                    <Text style={styles.textStyle}>Fermer</Text>
+                                </Pressable>
+                            </View>
                         </View>
-                    </View>
-                </Modal>
-            )}
+                    </Modal>
+                )}
+            )
         </View>
     );
 }
@@ -94,6 +142,41 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         margin: "auto",
+        backgroundColor: "#262626",
+    },
+    row: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 8,
+        width: "100%",
+        borderBottomWidth: 1,
+        borderColor: "#ddd",
+        height: 100,
+        gap: 40,
+        borderRadius: 10,
+        boxShadow: "5 5 15 5 #ffffff",
+    },
+    col: {
+        marginHorizontal: 6,
+        flexShrink: 1,
+        color: "#fff",
+    },
+    icon: {
+        width: 50,
+        aspectRatio: 1,
+        resizeMode: "contain",
+    },
+    favoriteIcon: {
+        textAlign: "right",
+    },
+    team: {
+        flex: 0.5,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 1,
+        gap: 10,
     },
     centeredView: {
         flex: 1,
