@@ -1,5 +1,6 @@
 import { IconSymbol } from "@/app/components/ui/icon";
 import useFavorites from "@/app/hooks/usefavorite";
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
 import {
     ActivityIndicator,
@@ -50,14 +51,15 @@ export default function MatchScreen() {
     const loadUserFavorites = useCallback(async () => {
         if (userId) {
             const favoritesArray = await getUserFavorites();
-            console.log("favorite", favoritesArray);
             setFavoriteMatchIds(new Set(favoritesArray.map(Number)));
         }
     }, [userId, getUserFavorites]);
 
-    useEffect(() => {
-        loadUserFavorites();
-    }, [loadUserFavorites]);
+    useFocusEffect(
+        useCallback(() => {
+            loadUserFavorites();
+        }, [loadUserFavorites])
+    );
 
     const handleToggleFavorite = async () => {
         if (!selectedMatch) return;
@@ -171,7 +173,7 @@ export default function MatchScreen() {
                                     </View>
 
                                     <View style={[styles.detailItem, { backgroundColor: colors.background }]}>
-                                        <IconSymbol name="clock.circle" size={20} color={colors.subText} />
+                                        <IconSymbol name="clock.fill" size={20} color={colors.subText} />
                                         <Text style={[styles.detailLabel, { color: colors.subText }]}>Heure</Text>
                                         <Text style={[styles.detailValue, { color: colors.text }]}>
                                             {new Date(selectedMatch.utcDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
