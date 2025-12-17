@@ -17,7 +17,6 @@ class APIHandler {
 
     getHeaders() {
         const currentToken = useAuthStore.getState().token;
-
         return {
             "Content-Type": "application/json",
             Authorization: currentToken ? `Bearer ${currentToken}` : "",

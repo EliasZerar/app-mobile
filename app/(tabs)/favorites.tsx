@@ -1,39 +1,37 @@
-import { Alert } from "react-native";
-import api from "@/app/services/api";
-import useAuthStore from "@/app/store/authStore";
+import { View, Text, StyleSheet } from "react-native";
+import { useTheme } from "@/app/utils/theme";
+import useFavorites from "@/app/hooks/usefavorite";
+import { useEffect, useState } from "react";
 
-export default function useFavorites() {
-    const { user } = useAuthStore();
+export default function FavoritesScreen() {
+    const { colors } = useTheme();
+    const { getUserFavorites } = useFavorites();
+    const [favIds, setFavIds] = useState<number[]>([]);
 
-    const userId = user?.id;
+    // Exemple simple pour afficher que ça marche
+    useEffect(() => {
+        const load = async () => {
+            const ids = await getUserFavorites();
+            if(ids) setFavIds(ids);
+        };
+        load();
+    }, []);
 
-    const toggleFavorite = async (matchId: number, isFavorite: boolean) => {
-        try {
-            if (isFavorite) {
-                await api.delete(`/favorite/${matchId}/${userId}`);
-            } else {
-                await api.post("/favorite", { matchId, userId });
-            }
-            return true;
-        } catch (error: any) {
-            if (error.response && error.response.status === 409) {
-                return true;
-            }
-            Alert.alert("Erreur", "Une erreur est survenue.");
-            return false;
-        }
-    }
-
-    const getUserFavorites = async () => {
-        if (!userId) {
-            return [];
-        }
-        try {
-            const response = await api.get(`/favorite`);
-            return response.data.favorites.map((fav: any) => fav.matchId);
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    return { toggleFavorite, getUserFavorites, userId };
+    return (
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
+            <Text style={{ color: colors.text, fontSize: 20, textAlign: 'center', marginTop: 20 }}>
+                Mes Favoris
+            </Text>
+            <Text style={{ color: colors.text, textAlign: 'center' }}>
+                {favIds.length} matchs favoris trouvés.
+            </Text>
+        </View>
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
+    }
+});

@@ -9,7 +9,7 @@ import {
     View,
 } from "react-native";
 import {IconSymbol} from "@/app/components/ui/icon";
-import useFavorites from "@/app/(tabs)/favorites";
+import useFavorites from "@/app/hooks/usefavorite";
 
 import MatchCard from "@/app/components/MatchCard";
 import { Match } from "@/app/constants/type";
@@ -49,8 +49,9 @@ export default function MatchScreen() {
     const loadUserFavorites = useCallback(async () => {
         if (userId) {
             const favoritesArray = await getUserFavorites();
+            console.log("favorite", favoritesArray);
             setFavoriteMatchIds(new Set(favoritesArray.map(Number)));
-  }
+        }
     }, [userId, getUserFavorites]);
 
     useEffect(() => {
@@ -132,7 +133,6 @@ export default function MatchScreen() {
                         </View>
                     </Modal>
                 )}
-            )
         </View>
     );
 }
