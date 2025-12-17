@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet } from "react-native";
-import { useTheme } from "@/app/utils/theme";
 import useFavorites from "@/app/hooks/usefavorite";
+import { useTheme } from "@/app/utils/theme";
 import { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function FavoritesScreen() {
     const { colors } = useTheme();
@@ -11,7 +11,7 @@ export default function FavoritesScreen() {
     useEffect(() => {
         const load = async () => {
             const ids = await getUserFavorites();
-            if(ids) setFavIds(ids);
+            if (ids) setFavIds(ids);
         };
         load();
     }, [getUserFavorites]);

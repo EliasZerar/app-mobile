@@ -1,15 +1,17 @@
-import {useCallback, useEffect, useState} from "react";
+import { IconSymbol } from "@/app/components/ui/icon";
+import useFavorites from "@/app/hooks/usefavorite";
+import { useCallback, useEffect, useState } from "react";
 import {
     ActivityIndicator,
     FlatList,
+    Image,
     Modal,
     Pressable,
+    ScrollView,
     StyleSheet,
     Text,
-    View,
+    View
 } from "react-native";
-import {IconSymbol} from "@/app/components/ui/icon";
-import useFavorites from "@/app/hooks/usefavorite";
 
 import MatchCard from "@/app/components/MatchCard";
 import { Match } from "@/app/constants/type";
@@ -25,7 +27,6 @@ export default function MatchScreen() {
     const [favoriteMatchIds, setFavoriteMatchIds] = useState<Set<number>>(new Set());
 
     const { toggleFavorite, getUserFavorites, userId } = useFavorites();
-    console.log("aaa",userId)
 
     const getMatches = async () => {
         try {
@@ -78,6 +79,7 @@ export default function MatchScreen() {
             });
         }
     };
+
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {isLoading ? (
@@ -97,42 +99,110 @@ export default function MatchScreen() {
                     )}
                 />
             )}
-                {selectedMatch && (
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible}
-                        onRequestClose={() => setModalVisible(false)}
-                    >
-                        <View style={styles.centeredView}>
-                            <View style={[styles.modalView, { backgroundColor: colors.card }]}>
+            {selectedMatch && (
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={styles.centeredView}>
+                        <Pressable style={styles.backdrop} onPress={() => setModalVisible(false)} />
+
+                        <View style={[styles.modalView, { backgroundColor: colors.card }]}>
+
+                            <View style={styles.modalHeader}>
+                                <Text style={[styles.competitionText, { color: colors.subText }]}>
+                                    Détails du match
+                                </Text>
+                                <Pressable
+                                    onPress={() => setModalVisible(false)}
+                                    style={[styles.closeIconBtn, { backgroundColor: colors.background }]}
+                                >
+                                    <IconSymbol name="xmark" size={16} color={colors.text} />
+                                </Pressable>
+                            </View>
+
+                            <ScrollView showsVerticalScrollIndicator={false}>
+                                <View style={styles.scoreBoardContainer}>
+                                    <View style={styles.teamColumn}>
+                                        <View style={[styles.logoPlaceholder, { borderColor: colors.border, backgroundColor: 'white', overflow: 'hidden' }]}>
+                                            <Image
+                                                source={{ uri: selectedMatch.homeTeam.crest }}
+                                                style={{ width: '80%', height: '80%' }}
+                                            />
+                                        </View>
+                                        <Text style={[styles.teamNameModal, { color: colors.text }]} numberOfLines={2}>
+                                            {selectedMatch.homeTeam.name}
+                                        </Text>
+                                    </View>
+
+                                    <View style={styles.scoreColumn}>
+                                        <Text style={[styles.scoreText, { color: colors.text }]}>VS</Text>
+                                        <View style={[styles.statusBadge, { backgroundColor: colors.background }]}>
+                                            <Text style={[styles.statusText, { color: colors.text }]}>
+                                                {new Date(selectedMatch.utcDate) > new Date() ? 'PRÉVU' : 'TERMINÉ'}
+                                            </Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.teamColumn}>
+                                        <View style={[styles.logoPlaceholder, { borderColor: colors.border, backgroundColor: 'white', overflow: 'hidden' }]}>
+                                            <Image
+                                                source={{ uri: selectedMatch.awayTeam.crest }}
+                                                style={{ width: '80%', height: '80%' }}
+                                            />
+                                        </View>
+                                        <Text style={[styles.teamNameModal, { color: colors.text }]} numberOfLines={2}>
+                                            {selectedMatch.awayTeam.name}
+                                        </Text>
+                                    </View>
+                                </View>
+
+                                <View style={[styles.divider, { backgroundColor: colors.border }]} />
+
+                                <View style={styles.detailsGrid}>
+                                    <View style={[styles.detailItem, { backgroundColor: colors.background }]}>
+                                        <IconSymbol name="calendar" size={20} color={colors.subText} />
+                                        <Text style={[styles.detailLabel, { color: colors.subText }]}>Date</Text>
+                                        <Text style={[styles.detailValue, { color: colors.text }]}>
+                                            {new Date(selectedMatch.utcDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
+                                        </Text>
+                                    </View>
+
+                                    <View style={[styles.detailItem, { backgroundColor: colors.background }]}>
+                                        <IconSymbol name="clock.circle" size={20} color={colors.subText} />
+                                        <Text style={[styles.detailLabel, { color: colors.subText }]}>Heure</Text>
+                                        <Text style={[styles.detailValue, { color: colors.text }]}>
+                                            {new Date(selectedMatch.utcDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                                        </Text>
+                                    </View>
+                                </View>
 
                                 <Pressable
+                                    style={[
+                                        styles.favoriteButton,
+                                        {
+                                            backgroundColor: favoriteMatchIds.has(selectedMatch.id) ? colors.background : colors.card
+                                        }
+                                    ]}
                                     onPress={handleToggleFavorite}
                                 >
                                     <IconSymbol
-                                        style={styles.favoriteIcon}
-                                        size={28}
-                                        name={favoriteMatchIds.has(selectedMatch.id) ? "star.fill" : "star.circle"}
-                                        color={'orange'}
+                                        name={favoriteMatchIds.has(selectedMatch.id) ? "star.fill" : "star"}
+                                        size={20}
+                                        color={'white'}
                                     />
+                                    <Text style={styles.favoriteButtonText}>
+                                        {favoriteMatchIds.has(selectedMatch.id) ? "Retirer des favoris" : "Ajouter aux favoris"}
+                                    </Text>
                                 </Pressable>
-                                <Text style={styles.modalText}>
-                                    {selectedMatch.homeTeam.name} vs {selectedMatch.awayTeam.name}
-                                </Text>
-                                <Text style={[styles.modalText, { color: colors.subText }]}>
-                                    {new Date(selectedMatch.utcDate).toLocaleString()}
-                                </Text>
-                                <Pressable
-                                    style={[styles.button, styles.buttonClose]}
-                                    onPress={() => setModalVisible(false)}
-                                >
-                                    <Text style={styles.textStyle}>Fermer</Text>
-                                </Pressable>
-                            </View>
+
+                            </ScrollView>
                         </View>
-                    </Modal>
-                )}
+                    </View>
+                </Modal>
+            )}
         </View>
     );
 }
@@ -144,71 +214,129 @@ const styles = StyleSheet.create({
         margin: "auto",
         backgroundColor: "#262626",
     },
-    row: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingVertical: 8,
-        width: "100%",
-        borderBottomWidth: 1,
-        borderColor: "#ddd",
-        height: 100,
-        gap: 40,
-        borderRadius: 10,
-        boxShadow: "5 5 15 5 #ffffff",
-    },
-    col: {
-        marginHorizontal: 6,
-        flexShrink: 1,
-        color: "#fff",
-    },
-    icon: {
-        width: 50,
-        aspectRatio: 1,
-        resizeMode: "contain",
-    },
-    favoriteIcon: {
-        textAlign: "right",
-    },
-    team: {
-        flex: 0.5,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        flexShrink: 1,
-        gap: 10,
-    },
     centeredView: {
         flex: 1,
         justifyContent: "flex-end",
-        alignItems: "flex-end",
-        width: "100%",
-        backgroundColor: 'rgba(0,0,0,0.5)'
+    },
+    backdrop: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0,0,0,0.6)',
     },
     modalView: {
-        borderRadius: 20,
-        padding: 35,
-        paddingHorizontal: 70,
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
+        padding: 24,
         width: "100%",
-        height: "50%",
+        maxHeight: "85%",
+        minHeight: "50%",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: -2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
     },
-    button: {
+    modalHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 24,
+    },
+    competitionText: {
+        fontSize: 14,
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        letterSpacing: 1,
+    },
+    closeIconBtn: {
+        padding: 8,
         borderRadius: 20,
-        padding: 10,
-        elevation: 2,
     },
-    buttonClose: {
-        backgroundColor: "#2196F3",
+    scoreBoardContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginBottom: 24,
     },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center",
+    teamColumn: {
+        flex: 1,
+        alignItems: 'center',
+        gap: 8,
     },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center",
+    logoPlaceholder: {
+        width: 64,
+        height: 64,
+        borderRadius: 32,
+        borderWidth: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 4,
+    },
+    teamNameModal: {
+        fontSize: 14,
+        fontWeight: '700',
+        textAlign: 'center',
+    },
+    scoreColumn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: 16,
+        width: 80,
+    },
+    scoreText: {
+        fontSize: 28,
+        fontWeight: '900',
+        marginBottom: 4,
+    },
+    statusBadge: {
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 4,
+    },
+    statusText: {
+        fontSize: 10,
         fontWeight: 'bold',
-        fontSize: 18
+    },
+    divider: {
+        height: 1,
+        width: '100%',
+        marginVertical: 20,
+        opacity: 0.2,
+    },
+    detailsGrid: {
+        flexDirection: 'row',
+        gap: 12,
+        marginBottom: 24,
+    },
+    detailItem: {
+        flex: 1,
+        padding: 16,
+        borderRadius: 16,
+        alignItems: 'center',
+        gap: 6,
+    },
+    detailLabel: {
+        fontSize: 12,
+        marginTop: 4,
+    },
+    detailValue: {
+        fontSize: 14,
+        fontWeight: '700',
+    },
+    favoriteButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 16,
+        borderRadius: 16,
+        gap: 10,
+        marginTop: 'auto',
+    },
+    favoriteButtonText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
     },
 });
