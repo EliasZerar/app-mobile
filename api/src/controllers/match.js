@@ -18,21 +18,26 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const newMatch = await MatchObject.create({
-            id: req.body.id,
-            utcDate: new Date(
-                req.body.utcDate.replace(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/, "$3-$2-$1T$4:$5:00Z")
-            ),
-            homeTeam: req.body.homeTeam,
-            awayTeam: req.body.awayTeam,
-            competition: req.body.competition
-        });
+        let matchesData = req.body.matches || [req.body];
 
-        return res.status(201).send({ ok: true, newMatch });
+        const formattedMatches = matchesData.map(match => ({
+            id: match.id,
+            utcDate: new Date(
+                match.utcDate.replace(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/, "$3-$2-$1T$4:$5:00Z")
+            ),
+            homeTeam: match.homeTeam,
+            awayTeam: match.awayTeam,
+            competition: match.competition,
+        }));
+
+        const newMatches = await MatchObject.insertMany(formattedMatches);
+
+        return res.status(201).send({ ok: true, count: newMatches.length, newMatches });
     } catch (error) {
+        console.error(error);
         return res.status(500).send({ ok: false, code: SERVER_ERROR, error });
     }
-})
+});
 
 
 module.exports = router;

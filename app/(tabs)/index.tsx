@@ -191,7 +191,7 @@ export default function MatchScreen() {
                                     onPress={handleToggleFavorite}
                                 >
                                     <IconSymbol
-                                        name={favoriteMatchIds.has(selectedMatch.id) ? "star.fill" : "star"}
+                                        name={favoriteMatchIds.has(selectedMatch.id) ? "star.fill" : "star.circle"}
                                         size={20}
                                         color={'white'}
                                     />
