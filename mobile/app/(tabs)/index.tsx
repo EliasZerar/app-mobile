@@ -35,7 +35,9 @@ export default function MatchScreen() {
         const query = searchQuery.toLowerCase();
         return (
             match.homeTeam.name.toLowerCase().includes(query) ||
-            match.awayTeam.name.toLowerCase().includes(query)
+            match.awayTeam.name.toLowerCase().includes(query) ||
+            match.homeTeam.tla.toLowerCase().includes(query) ||
+            match.awayTeam.tla.toLowerCase().includes(query)
         );
     });
 
