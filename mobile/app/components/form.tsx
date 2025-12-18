@@ -1,4 +1,3 @@
-// app/components/form.tsx
 import { Link, usePathname } from "expo-router";
 import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -89,7 +88,7 @@ const styles = StyleSheet.create({
     containerForm: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center', // Centrer les éléments
+        alignItems: 'center',
         width: '100%',
         gap: 20
     },

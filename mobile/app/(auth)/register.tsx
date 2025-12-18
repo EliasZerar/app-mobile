@@ -32,9 +32,6 @@ export default function RegisterScreen() {
             });
 
             if (response.status === 201) {
-
-                console.log('response:', response)
-
                 const token = response.token || response.data?.token;
 
                 if (token) {
