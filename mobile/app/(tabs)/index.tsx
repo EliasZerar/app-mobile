@@ -73,10 +73,12 @@ export default function MatchScreen() {
         }, [loadUserFavorites])
     );
 
-    const handleToggleFavorite = async () => {
-        if (!selectedMatch) return;
+    const handleToggleFavorite = async (matchParam?: Match) => {
+        const targetMatch = matchParam || selectedMatch;
 
-        const matchId = selectedMatch.id;
+        if (!targetMatch) return;
+
+        const matchId = targetMatch.id;
         const isCurrentlyFavorite = favoriteMatchIds.has(matchId);
 
         const success = await toggleFavorite(matchId, isCurrentlyFavorite);
@@ -105,15 +107,35 @@ export default function MatchScreen() {
             ) : (
                 <FlatList
                     data={filteredData}
-                    keyExtractor={({ id }) => id.toString()}
+                    keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => (
-                        <MatchCard
-                            item={item}
-                            onPress={() => {
-                                setSelectedMatch(item);
-                                setModalVisible(true);
-                            }}
-                        />
+                        <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 15 }}>
+                            <View style={{ flex: 1 }}>
+                                <MatchCard
+                                    item={item}
+                                    onPress={() => {
+                                        setSelectedMatch(item);
+                                        setModalVisible(true);
+                                    }}
+                                />
+                                <Pressable
+                                    onPress={() => handleToggleFavorite(item)} // On envoie le match actuel
+                                    style={{
+                                        position: 'absolute',
+                                        top: 10,
+                                        right: 10,
+                                        zIndex: 10,
+                                        padding: 5,
+                                    }}
+                                >
+                                    <IconSymbol
+                                        name={favoriteMatchIds.has(item.id) ? "star.fill" : "star.circle"}
+                                        size={22}
+                                        color={favoriteMatchIds.has(item.id) ? "#FFD700" : "white"}
+                                    />
+                                </Pressable>
+                            </View>
+                        </View>
                     )}
                 />
             )}
@@ -204,7 +226,7 @@ export default function MatchScreen() {
                                             backgroundColor: favoriteMatchIds.has(selectedMatch.id) ? colors.background : colors.card
                                         }
                                     ]}
-                                    onPress={handleToggleFavorite}
+                                    onPress={() => handleToggleFavorite()}
                                 >
                                     <IconSymbol
                                         name={favoriteMatchIds.has(selectedMatch.id) ? "star.fill" : "star.circle"}
