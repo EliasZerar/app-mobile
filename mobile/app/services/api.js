@@ -31,7 +31,6 @@ class APIHandler {
 
     async post(endpoint, data, options = {}) {
         try {
-            console.log(`[API] POST ${API_HOST}${endpoint}`);
             const response = await fetch(`${API_HOST}${endpoint}`, {
                 method: "POST",
                 headers: {
@@ -59,7 +58,6 @@ class APIHandler {
 
     async get(endpoint, options = {}) {
         try {
-            console.log(`[API] GET ${API_HOST}${endpoint}`);
             const response = await fetch(`${API_HOST}${endpoint}`, {
                 method: "GET",
                 headers: {
@@ -85,7 +83,6 @@ class APIHandler {
 
     async put(endpoint, data, options = {}) {
         try {
-            console.log(`[API] PUT ${API_HOST}${endpoint}`);
             const response = await fetch(`${API_HOST}${endpoint}`, {
                 method: "PUT",
                 headers: {
@@ -112,7 +109,6 @@ class APIHandler {
 
     async delete(endpoint, data, options = {}) {
         try {
-            console.log(`[API] DELETE ${API_HOST}${endpoint}`);
             const response = await fetch(`${API_HOST}${endpoint}`, {
                 method: "DELETE",
                 headers: {

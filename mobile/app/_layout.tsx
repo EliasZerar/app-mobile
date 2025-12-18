@@ -16,10 +16,18 @@ export default function RootLayout() {
                     <Stack.Screen name="(auth)/register" options={{ headerTitle: "Inscription" }} />
                 </Stack.Protected>
 
+                <Stack.Protected guard={!isLoggedIn}>
+                    <Stack.Screen name="(auth)/forgot-password" options={{ headerTitle: "Mot de passe oublié" }} />
+                </Stack.Protected>
+
+                <Stack.Protected guard={!isLoggedIn}>
+                    <Stack.Screen name="(auth)/reset-password" options={{ headerTitle: "Réinitialisation de mot de passe" }} />
+                </Stack.Protected>
+
                 <Stack.Protected guard={isLoggedIn}>
                     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 </Stack.Protected>
-            </Stack>
+            </Stack >
             <StatusBar style={"inverted"} />
         </>
     )

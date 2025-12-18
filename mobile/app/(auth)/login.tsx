@@ -1,7 +1,7 @@
 import Form from "@/app/components/form";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 
 import api from '../services/api';
 import useAuthStore from "../store/authStore";
@@ -18,7 +18,6 @@ export default function LoginScreen() {
     const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
 
     const handleLogin = async () => {
-        console.log('handleLogin called')
         if (!email || !password) {
             Alert.alert("Erreur", "Veuillez remplir tous les champs");
             return;
@@ -32,7 +31,6 @@ export default function LoginScreen() {
                 setToken(response.token || response.data?.token);
                 setUser(response.user || response.data?.user);
                 setIsLoggedIn(true);
-
 
                 router.replace("/");
             } else {
@@ -63,6 +61,10 @@ export default function LoginScreen() {
                 onSubmit={handleLogin}
                 loading={loading}
             />
+
+            <TouchableOpacity onPress={() => router.push("/(auth)/forgot-password")} style={{ marginBottom: 20, borderWidth: 1, borderColor: 'blue', borderRadius: 50, paddingVertical: 10, paddingHorizontal: 20 }}>
+                <Text style={{ color: 'blue' }}>Mot de passe oublié ?</Text>
+            </TouchableOpacity>
         </View>
     );
 }

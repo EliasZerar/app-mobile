@@ -15,7 +15,6 @@ router.get("/",
             if (!req.user._id)
                 return res.status(403).send({ ok: false, code: "FORBIDDEN" });
             const favorites = await FavoriteObject.find({ userId: req.user._id });
-            console.log("Favorite found", favorites);
             return res.status(200).send({ ok: true, favorites });
         } catch (error) {
             return res.status(500).send({ ok: false, code: "SERVER_ERROR", error });
@@ -56,7 +55,6 @@ router.delete("/:matchId",
 
             return res.status(200).send({ ok: true, message: "Favori supprimé" });
         } catch (error) {
-            console.log(error);
             return res.status(500).send({ ok: false, code: "SERVER_ERROR", error });
         }
     });
