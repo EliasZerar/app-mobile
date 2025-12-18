@@ -8,9 +8,8 @@ const { body, validationResult } = require('express-validator');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-
     try {
+        const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) return res.status(400).json({ message: 'Invalid credentials' });
 
@@ -35,10 +34,6 @@ router.post('/login', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Error logging in', error: err.message });
     }
-});
-
-router.post('/logout', (req, res) => {
-    res.status(200).json({ message: 'Logged out successfully' });
 });
 
 router.post('/register',

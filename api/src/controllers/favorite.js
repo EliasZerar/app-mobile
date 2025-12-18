@@ -5,28 +5,22 @@ const FavoriteObject = require("../models/favorite");
 
 const SERVER_ERROR = "SERVER_ERROR";
 
-const test = async () => {
-    const favorites = await FavoriteObject.find({userId: "694161816b074610e45c6def"});
-    console.log("Favorite found", favorites);
-}
-
-test()
 router.get("/",
     passport.authenticate(["user"], {
         session: false,
         failWithError: true,
     }),
     async (req, res) => {
-    try {
-        if(!req.user._id)
-            return res.status(403).send({ ok: false, code: "FORBIDDEN" });
-        const favorites = await FavoriteObject.find({userId: req.user._id});
-        console.log("Favorite found", favorites);
-        return res.status(200).send({ ok: true, favorites });
-    } catch (error) {
-        return res.status(500).send({ ok: false, code: "SERVER_ERROR", error });
-    }
-});
+        try {
+            if (!req.user._id)
+                return res.status(403).send({ ok: false, code: "FORBIDDEN" });
+            const favorites = await FavoriteObject.find({ userId: req.user._id });
+            console.log("Favorite found", favorites);
+            return res.status(200).send({ ok: true, favorites });
+        } catch (error) {
+            return res.status(500).send({ ok: false, code: "SERVER_ERROR", error });
+        }
+    });
 
 
 router.post("/",
