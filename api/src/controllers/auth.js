@@ -37,10 +37,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/logout', (req, res) => {
-    res.status(200).json({ message: 'Logged out successfully' });
-});
-
 router.post('/register',
     [
         body('email').isEmail().withMessage('Enter a valid email'),
