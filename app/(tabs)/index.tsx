@@ -2,6 +2,7 @@ import { IconSymbol } from "@/app/components/ui/icon";
 import useFavorites from "@/app/hooks/usefavorite";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
+import {MySearchBar} from "@/app/components/searchBar"
 import {
     ActivityIndicator,
     FlatList,
@@ -26,8 +27,17 @@ export default function MatchScreen() {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
     const [favoriteMatchIds, setFavoriteMatchIds] = useState<Set<number>>(new Set());
+    const [searchQuery, setSearchQuery] = useState('');
 
     const { toggleFavorite, getUserFavorites, userId } = useFavorites();
+
+    const filteredData = data.filter(match => {
+        const query = searchQuery.toLowerCase();
+        return (
+            match.homeTeam.name.toLowerCase().includes(query) ||
+            match.awayTeam.name.toLowerCase().includes(query)
+        );
+    });
 
     const getMatches = async () => {
         try {
@@ -84,11 +94,15 @@ export default function MatchScreen() {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
+            <MySearchBar
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+            />
             {isLoading ? (
                 <ActivityIndicator color={colors.text} size="large" style={{ marginTop: 20 }} />
             ) : (
                 <FlatList
-                    data={data}
+                    data={filteredData}
                     keyExtractor={({ id }) => id.toString()}
                     renderItem={({ item }) => (
                         <MatchCard
