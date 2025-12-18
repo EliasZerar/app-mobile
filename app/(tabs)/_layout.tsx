@@ -10,7 +10,7 @@ function ThemeToggleButton() {
     return (
         <Pressable onPress={toggleTheme} style={{ marginRight: 15 }}>
             <IconSymbol
-                size={24}
+                size={28}
                 name={theme === 'light' ? 'moon.fill' : 'sun.max.fill'}
                 color={colors.text}
             />
@@ -51,7 +51,7 @@ function TabsWithTheme() {
             />
             <Tabs
                 screenOptions={{
-                    headerStyle: { backgroundColor: colors.background },
+                    headerStyle: { backgroundColor: colors.background, height: 120 },
                     headerTintColor: colors.text,
                     tabBarStyle: {
                         backgroundColor: colors.background,
