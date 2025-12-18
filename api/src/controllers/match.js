@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        let matchesData = req.body.matches || [req.body];
+        let matchesData = req.body.matches;
 
         const formattedMatches = matchesData.map(match => ({
             id: match.id,
