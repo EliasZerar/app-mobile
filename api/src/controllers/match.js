@@ -27,7 +27,7 @@ router.post("/",
         try {
             if (!req.user._id)
                 return res.status(403).send({ ok: false, code: "FORBIDDEN" });
-            let matchesData = req.body.matches || [req.body];
+            let matchesData = req.body.matches;
 
             const formattedMatches = matchesData.map(match => ({
                 id: match.id,
