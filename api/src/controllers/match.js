@@ -22,9 +22,7 @@ router.post("/", async (req, res) => {
 
         const formattedMatches = matchesData.map(match => ({
             id: match.id,
-            utcDate: new Date(
-                match.utcDate.replace(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/, "$3-$2-$1T$4:$5:00Z")
-            ),
+            utcDate: new Date(match.utcDate),
             homeTeam: match.homeTeam,
             awayTeam: match.awayTeam,
             competition: match.competition,

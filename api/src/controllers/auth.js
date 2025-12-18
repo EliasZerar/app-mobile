@@ -8,9 +8,9 @@ const { body, validationResult } = require('express-validator');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
 
     try {
+        const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) return res.status(400).json({ message: 'Invalid credentials' });
 
@@ -43,12 +43,10 @@ router.post('/register',
         body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
     ],
     async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-
-        const { email, password } = req.body;
-
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+            const { email, password } = req.body;
             const hashedPassword = await bcrypt.hash(password, 10);
             const user = new User({ email, password: hashedPassword });
             await user.save();
